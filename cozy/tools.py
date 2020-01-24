@@ -1,6 +1,8 @@
 from datetime import datetime
 import time
 import threading
+from platform import system as get_system
+from enum import Enum
 from threading import Thread, Event
 from gettext import ngettext
 import logging as log
@@ -9,6 +11,16 @@ import os
 from gi.repository import GLib, Gio
 import cozy.magic.magic as magic
 
+class Platform(Enum):
+    Linux = 0
+    Mac = 1
+
+def system_platform():
+    os = get_system().upper()
+    if "LINUX" in os:
+        return Platform.Linux
+    else:
+        return Platform.Mac
 
 
 def shorten_string(string, length):
